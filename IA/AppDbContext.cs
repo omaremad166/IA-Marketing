@@ -12,15 +12,12 @@ namespace IA
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Project> Projects { get; set; }
+        public DbSet<Request> Requests { get; set; }
+        public DbSet<ProjectState> ProjectStates { get; set; }
 
         public AppDbContext()
         {
 
-        }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            
         }
     }
 }
