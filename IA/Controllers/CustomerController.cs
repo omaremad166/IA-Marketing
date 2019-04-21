@@ -9,13 +9,19 @@ namespace IA.Controllers
 {
     public class CustomerController : Controller
     {
+        private AppDbContext _context = new AppDbContext();
         public ActionResult CustomerProfile()
         {
-            return View();
+            int userId = Convert.ToInt32(Session["UserId"]);
+            var Customer = _context.Users.Find(userId);
+            
+            return View(Customer);
         }
 
         public ActionResult ListCurrentProjects()
         {
+            int userId = Convert.ToInt32(Session["UserId"]);
+            //var Projects = _context.Users.FirstOrDefault(u => u.UserId == userId).Projects.ToList();
             return View();
         }
 

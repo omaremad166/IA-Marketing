@@ -12,7 +12,7 @@ namespace IA.Models
         public int Price { get; set; }
         public string Description { get; set; }
 
-        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<UserProject> UserProjects { get; set; }
 
         public int ProjectStateId { get; set; }
         public virtual ProjectState ProjectState { get; set; }

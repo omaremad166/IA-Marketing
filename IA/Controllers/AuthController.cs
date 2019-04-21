@@ -31,9 +31,9 @@ namespace IA.Controllers
             var user = db.Users.Where(u => u.Email.Equals(_user.Email) && u.Password.Equals(_user.Password)).FirstOrDefault();
             if (user != null)
             {
-                Session["UserId"] = user.UserId.ToString();
+                Session["UserId"] = user.UserId;
                 Session["UserName"] = user.GetUserName();
-                Session["UserRole"] = user.RoleId.ToString();
+                Session["UserRole"] = user.RoleId;
             }
             return RedirectToAction("Index");
         }

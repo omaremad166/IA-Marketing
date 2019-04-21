@@ -20,7 +20,7 @@ namespace IA.Models
         public int RoleId { get; set; }
         public virtual Role Role { get; set; }
 
-        public virtual ICollection<Project> Projects { get; set; }
+        public virtual ICollection<UserProject> UserProjects { get; set; }
 
         public virtual ICollection<Request> Requests { get; set; }
 
