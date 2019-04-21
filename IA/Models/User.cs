@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace IA.Models
 {
@@ -22,5 +23,12 @@ namespace IA.Models
         public virtual ICollection<Project> Projects { get; set; }
 
         public virtual ICollection<Request> Requests { get; set; }
+
+
+        public string GetUserName()
+        {
+            return this.FirstName + ' ' + this.LastName;
+        }
+
     }
 }

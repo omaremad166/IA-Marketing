@@ -1,0 +1,198 @@
+﻿@model IA.Models.User
+
+    @if (Session["UserId"] == null)
+    {
+        <!-- Start Login Modal -->
+        using (Html.BeginForm("Login", "Auth"))
+        {
+            <div id="myModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Login</h4>
+                            </div>
+                            <div class="modal-body">
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.Email)
+                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email" })
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.Password)
+                                        @Html.TextBoxFor(m => m.Password, new { @class = "form-control", type = "password" })
+                                    </div>
+
+                                    <div class="register-link m-t-15 text-center">
+                                        <p>Don't have account ? <a href="#" id="fromintoup"> Sign Up Here</a></p>
+                                    </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30">Sign in</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+        }
+        <!-- End Login Modal -->
+        <!-- Start register Modal -->
+        using (Html.BeginForm("Register", "Auth"))
+        {
+            <div id="regModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Register</h4>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.FirstName)
+                                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.LastName)
+                                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Email)
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Password)
+                                    @Html.TextBoxFor(m => m.Password, new { @class = "form-control", type = "password" })
+                                </div>
+                                <div class="register-link m-t-15 text-center">
+                                    <p>Already have account ? <a href="#" id='fromuptoin'> Sign in</a></p>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30">Sign Up</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+        }
+            <!-- End regesiter Modal -->
+    }
+        
+
+        <div class="content-wrap">
+            <div class="main">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-12 p-r-0 title-margin-right">
+                            <div class="page-header">
+                                <div class="page-title">
+                                    <h1>Hello, @Session["UserName"]</h1>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- /# column -->
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 p-l-0 title-margin-left">
+                            <div class="page-header page_header_2">
+                                <div class="page-title">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                                        <li class="breadcrumb-item active">Home</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /# column -->
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-title">
+                                    <h4>Add new Project</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="basic-form">
+                                        <form>
+                                            <div class="form-group">
+                                                <label>Project Name</label>
+                                                <input type="text" class="form-control" placeholder="Project Name">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Price</label>
+                                                <input type="text" class="form-control" placeholder="Price in dollar currency">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>description</label>
+                                                <textarea class="form-control" placeholder="description"></textarea>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /# row -->
+                        <section id="main-content">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="card">
+                                        <div class="card-title">
+                                            <h4>Bootstrap Data Table </h4>
+
+                                        </div>
+                                        <div class="bootstrap-data-table-panel table_22">
+                                            <div class="table-responsive">
+                                                <table id="row-select" class="display table table-borderd table-hover forminline_22">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <th>Position</th>
+                                                            <th>Office</th>
+                                                            <th>Age</th>
+                                                            <th>Start date</th>
+                                                            <th>Salary</th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Tiger Nixon</td>
+                                                            <td>System Architect</td>
+                                                            <td>Edinburgh</td>
+                                                            <td>61</td>
+                                                            <td>2011/04/25</td>
+                                                            <td>$320,800</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Vivian Harrell</td>
+                                                            <td>Financial Controller</td>
+                                                            <td>San Francisco</td>
+                                                            <td>62</td>
+                                                            <td>2009/02/14</td>
+                                                            <td>$452,500</td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <th>Position</th>
+                                                            <th>Office</th>
+                                                            <th>Age</th>
+                                                            <th>Start date</th>
+                                                            <th>Salary</th>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /# card -->
+                                </div>
+                                <!-- /# column -->
+                            </div>
+                        </section>
+                        <!-- /# row -->
+                        <!-- /# column -->
+                        <!-- /# row -->
+                        ?
