@@ -1,0 +1,58 @@
+﻿@model IA.Models.Project
+
+@{
+    ViewBag.Title = "EditProject";
+}
+<div class="content-wrap">
+    <div class="main">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-12 p-r-0 title-margin-right"></div>
+                <!-- /# column -->
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 p-l-0 title-margin-left">
+                    <div class="page-header page_header_2">
+                        <div class="page-title">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                                <li class="breadcrumb-item active">Edit</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!-- /# column -->
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-title">
+                            <h4>Edit Project</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="basic-elements">
+                                @using (Html.BeginForm("EditProject", "Customer"))
+                                {
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            @Html.HiddenFor(model => model.ProjectId)
+                                            @Html.HiddenFor(model => model.ProjectStateId)
+                                            @Html.HiddenFor(model => model.Price)
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.ProjectName)
+                                                @Html.TextBoxFor(m => m.ProjectName, new { @class = "form-control" })
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => m.Description)
+                                                @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.ActionLink("Back", "CustomerProfile", "Customer", null, new { @class = "btn" })
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+

@@ -1,4 +1,4 @@
-﻿@model IA.Models.User
+﻿@model IA.ViewModels.UserProjectsViewModel
 
 @{
     ViewBag.Title = "CustomerProfile";
@@ -38,9 +38,9 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-8">
-                                            <div class="user-profile-name">@Model.GetUserName()</div>
+                                            <div class="user-profile-name">@Model.User.GetUserName()</div>
                                             
-                                            <div class="user-job-title">@Model.Description</div>
+                                            <div class="user-job-title">@Model.User.Description</div>
                                             
                                             <div class="custom-tab user-profile-tab">
                                                 <ul class="nav nav-tabs" role="tablist">
@@ -54,18 +54,18 @@
                                                             <h4>Contact information</h4>
                                                             <div class="phone-content">
                                                                 <span class="contact-title">Phone:</span>
-                                                                <span class="phone-number">+2 @Model.PhoneNo</span>
+                                                                <span class="phone-number">+2 @Model.User.PhoneNo</span>
                                                             </div>
                                                             <div class="email-content">
                                                                 <span class="contact-title">Email:</span>
-                                                                <span class="contact-email">@Model.Email</span>
+                                                                <span class="contact-email">@Model.User.Email</span>
                                                             </div>
                                                         </div>
                                                         <div class="basic-information">
                                                             <h4>Basic information</h4>
                                                             <div class="gender-content">
                                                                 <span class="contact-title">User Type:</span>
-                                                                <span class="gender">@Model.Role.RoleName</span>
+                                                                <span class="gender">@Model.User.Role.RoleName</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -84,8 +84,9 @@
                         <div class="card">
                             <div class="card-title">
                                 <h4>Recent Project </h4>
-
                             </div>
+                            @Html.ActionLink("Create", "CreateProject", "Customer", null, new { @class = "btn btn-primary" })
+
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-hover ">
@@ -93,59 +94,59 @@
                                             <tr>
                                                 <th>Name</th>
                                                 <th>Status</th>
-                                                <th>Date</th>
+                                                <th>Description</th>
                                                 <th>Price</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            
+                                            @foreach (var project in Model.Projects)
+                                            {
                                             <tr>
-                                                <td>Kolor Tea Shirt For Man</td>
+                                                <td>@project.ProjectName</td>
                                                 <td>
-                                                    <span class="badge badge-primary">Ongoing</span>
-                                                </td>
-                                                <td>January 22</td>
-                                                <td class="color-primary">$21.56</td>
+                                                    @if (@project.ProjectState.ProjectStateId == 4)
+                                                    {
+                                                        <span class="badge badge-success">@project.ProjectState.State</span>
+                                                    }
+                                                    else if (@project.ProjectState.ProjectStateId == 2)
+                                                    {
+                                                        <span class="badge badge-primary">@project.ProjectState.State</span>
+                                                    }
+                                                    else if (@project.ProjectState.ProjectStateId == 1)
+                                                    {
+                                                        <span class="badge badge-warning">@project.ProjectState.State</span>
+                                                    }
+                                                <td>@project.Description</td>
+
+                                                @if (project.Price == null)
+                                                {
+                                                    <td class="color-primary">------</td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="color-primary">$@project.Price</td>
+                                                }
+                                                @if (project.ProjectStateId == 2)
+                                                {
+                                                    <td><button class="btn btn-light" disabled>Assign</button></td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@Html.ActionLink("Assign", "AssignProject", "Customer", new { id = project.ProjectId }, new { @class = "btn btn-light" })</td>
+                                                }
+                                                <td>@Html.ActionLink("Edit", "EditProject", "Customer", new { project.ProjectId }, new { @class = "btn btn-light" })</td>
+                                                @if (project.ProjectStateId == 2)
+                                                {
+                                                    <td><button class="btn btn-danger" disabled>Delete</button></td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@Html.ActionLink("Delete", "DeleteProject", "Customer", new { project.ProjectId }, new { @class = "btn btn-danger" })</td>
+                                                }
+
                                             </tr>
-                                            <tr>
-                                                <td>Kolor Tea Shirt For Women</td>
-                                                <td>
-                                                    <span class="badge badge-success">Complete</span>
-                                                </td>
-                                                <td>January 30</td>
-                                                <td class="color-success">$55.32</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Blue Backpack For Baby</td>
-                                                <td>
-                                                    <span class="badge badge-danger">Rejected</span>
-                                                </td>
-                                                <td>January 25</td>
-                                                <td class="color-danger">$14.85</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Kolor Tea Shirt For Man</td>
-                                                <td>
-                                                    <span class="badge badge-primary">Ongoing</span>
-                                                </td>
-                                                <td>January 22</td>
-                                                <td class="color-primary">$21.56</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Kolor Tea Shirt For Women</td>
-                                                <td>
-                                                    <span class="badge badge-success">Complete</span>
-                                                </td>
-                                                <td>January 30</td>
-                                                <td class="color-success">$55.32</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Blue Backpack For Baby</td>
-                                                <td>
-                                                    <span class="badge badge-danger">Rejected</span>
-                                                </td>
-                                                <td>January 25</td>
-                                                <td class="color-danger">$14.85</td>
-                                            </tr>
+                                            }
                                         </tbody>
                                     </table>
                                 </div>
@@ -243,13 +244,6 @@
                         <!-- /# card -->
                     </div>
                     <!-- /# column -->
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="footer">
-                            <p>2018 ©  mid Admin Board by <a href="#">webstrot.</a></p>
-                        </div>
-                    </div>
                 </div>
             </section>
         </div>

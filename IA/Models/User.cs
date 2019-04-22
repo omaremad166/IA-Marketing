@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -22,7 +23,10 @@ namespace IA.Models
 
         public virtual ICollection<UserProject> UserProjects { get; set; }
 
-        public virtual ICollection<Request> Requests { get; set; }
+        [InverseProperty("Sender")]
+        public virtual ICollection<Request> RequestsSenders { get; set; }
+        [InverseProperty("Receiver")]
+        public virtual ICollection<Request> RequestsReceivers { get; set; }
 
 
         public string GetUserName()
