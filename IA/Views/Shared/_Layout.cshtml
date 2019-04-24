@@ -92,7 +92,29 @@
                     <li class="label">Main</li>
                     <li><a href="index-2.html"><i class="ti-home"></i> Home </a></li>
                     <li><a href="create.html"><i class="ti-id-badge"></i>Create Profile</a></li>
-                    <li><i class="ti-user"></i>@Html.ActionLink("My Profile", "CustomerProfile", "Customer")</li>
+                    <li>
+                        <i class="ti-user"></i>
+                        @if (Convert.ToInt32(Session["UserRole"]) == 1)
+                        {
+                            @Html.ActionLink("My Profile", "AdminProfile", "Admin")
+                        }
+                        else if (Convert.ToInt32(Session["UserRole"]) == 2)
+                        {
+                            @Html.ActionLink("My Profile", "CustomerProfile", "Customer")
+                        }
+                        else if (Convert.ToInt32(Session["UserRole"]) == 3)
+                        {
+                            @Html.ActionLink("My Profile", "MarketingDirectorProfile", "MarketingDirector")
+                        }
+                        else if (Convert.ToInt32(Session["UserRole"]) == 4)
+                        {
+                            @Html.ActionLink("My Profile", "MarketingTeamLeaderProfile", "MarketingTeamLeader")
+                        }
+                        else if (Convert.ToInt32(Session["UserRole"]) == 5)
+                        {
+                            @Html.ActionLink("My Profile", "MarketingTraineeProfile", "MarketingTrainee")
+                        }
+                    </li>
                     <li><a id="login"><i class="ti-angle-double-right"></i>Login</a></li>
                     <li><a id="salem"><i class="ti-shift-right"></i>Register</a></li>
                     <li><i class="ti-close"></i>@Html.ActionLink("Logout", "Logout", "Auth")</li>

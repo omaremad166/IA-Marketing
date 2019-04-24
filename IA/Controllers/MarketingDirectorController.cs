@@ -1,6 +1,8 @@
 ﻿using IA.Models;
+using IA.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -9,68 +11,148 @@ namespace IA.Controllers
 {
     public class MarketingDirectorController : Controller
     {
+        private AppDbContext _context = new AppDbContext();
+
         public ActionResult MarketingDirectorProfile()
         {
-            return View();
+            int userId = Convert.ToInt32(Session["UserId"]);
+
+            UserProjectsRequestsViewModel UserProjectsVM = new UserProjectsRequestsViewModel();
+            UserProjectsVM.User = _context.Users.Find(userId);
+
+            var ProjectIds = _context.UserProjects.Where(up => up.UserId == userId).Select(up => up.ProjectId).ToList();
+            var Projects = _context.Projects.Where(p => ProjectIds.Contains(p.ProjectId)).ToList();
+
+            UserProjectsVM.Projects = Projects;
+
+            var requests = _context.Requests.Where(r => r.ReceiverId == userId).Include(r => r.Project).Include(r => r.Sender).ToList();
+            UserProjectsVM.Requests = requests;
+
+            return View(UserProjectsVM);
         }
 
-        public ActionResult ListRequests()
+        public ActionResult AcceptRequest(int RequestId)
         {
-            return View();
+            Request request = _context.Requests.Find(RequestId);
+
+            UserProject userProject = new UserProject();
+            userProject.ProjectId = request.ProjectId;
+            userProject.UserId = Convert.ToInt32(Session["UserId"]);
+            _context.UserProjects.Add(userProject);
+
+            Project project = _context.Projects.Find(request.ProjectId);
+            project.ProjectStateId = 2;
+            _context.Entry(project).State = EntityState.Modified;
+
+            List<Request> requests = _context.Requests.Where(r => r.ProjectId == request.ProjectId).ToList();
+
+            foreach(var r in requests)
+            {
+                _context.Requests.Remove(r);
+            }
+            
+            _context.SaveChanges();
+
+            return RedirectToAction("MarketingDirectorProfile");
         }
 
-        public ActionResult AcceptRequest()
+        public ActionResult RejectRequest(int RequestId)
         {
-            return View();
-        }
+            Request request = _context.Requests.Find(RequestId);
+            _context.Requests.Remove(request);
+            _context.SaveChanges();
 
-        public ActionResult RejectRequest()
-        {
-            return View();
-        }
-
-        public ActionResult ListCurrentProjects()
-        {
-            return View();
-        }
-
-        public ActionResult ListDeliveredProjects()
-        {
-            return View();
-        }
-
-        public ActionResult ListTraineesAndLeaders()
-        {
-            return View();
-        }
-
-        public ActionResult SendRequest()
-        {
-            return View();
+            return RedirectToAction("MarketingDirectorProfile");
         }
 
         [HttpGet]
-        public ActionResult ManageProject()
+        public ActionResult AddMember(int ProjectId)
         {
-            return View();
+            Project project = _context.Projects.Find(ProjectId);
+            List<User> users = _context.Users.Where(u => u.RoleId == 4 || u.RoleId == 5).ToList();
+
+            ProjectUsersViewModel ProjectUsersVM = new ProjectUsersViewModel();
+            ProjectUsersVM.Project = project;
+            ProjectUsersVM.Users = users;
+
+            return View(ProjectUsersVM);
+        }
+
+        [HttpPost]
+        public ActionResult AddMember()
+        {
+            Request request = new Request();
+
+            request.ProjectId = Convert.ToInt32(Request.Form["ProjectId"]);
+            request.SenderId = Convert.ToInt32(Session["UserId"]);
+            request.ReceiverId = Convert.ToInt32(Request.Form["TeamMemberId"]);
+
+            _context.Requests.Add(request);
+            _context.SaveChanges();
+
+            return RedirectToAction("MarketingDirectorProfile");
+        }
+
+        [HttpGet]
+        public ActionResult ManageProject(int ProjectId)
+        {
+            Project project = _context.Projects.Find(ProjectId);
+            return View(project);
         }
 
         [HttpPost]
         public ActionResult ManageProject(Project _project)
         {
-            return View();
+            _context.Entry(_project).State = EntityState.Modified;
+            _context.SaveChanges();
+            return RedirectToAction("MarketingDirectorProfile");
+        }
+
+        [HttpGet]
+        public ActionResult RemoveMember(int ProjectId)
+        {
+            List<UserProject> userProjects = _context.UserProjects.Where(up => up.ProjectId == ProjectId).Include(u => u.User).Where(u => u.User.RoleId == 4 || u.User.RoleId == 5).ToList();
+            ViewBag.ProjectId = ProjectId;
+
+            return View(userProjects);
         }
 
         [HttpPost]
         public ActionResult RemoveMember()
         {
-            return View();
+            UserProject userProject = _context.UserProjects.Find(Convert.ToInt32(Request.Form["TeamMemberId"]), Convert.ToInt32(Request.Form["ProjectId"]));
+            _context.UserProjects.Remove(userProject);
+            _context.SaveChanges();
+
+            return RedirectToAction("MarketingDirectorProfile");
         }
 
-        [HttpPost]
-        public ActionResult LeaveProject()
+        public ActionResult LeaveProject(int ProjectId)
         {
-            return View();
+            UserProject userProject = _context.UserProjects.Find(Convert.ToInt32(Session["UserId"]), ProjectId);
+            _context.UserProjects.Remove(userProject);
+            _context.SaveChanges();
+
+            return RedirectToAction("MarketingDirectorProfile");
+        }
+
+        public ActionResult FinishProject(int ProjectId)
+        {
+            Project project = _context.Projects.Find(ProjectId);
+
+            project.ProjectStateId = 4;
+            _context.Entry(project).State = EntityState.Modified;
+
+            List<Request> requests = _context.Requests.Where(r => r.ProjectId == ProjectId).ToList();
+
+            foreach (Request r in requests)
+            {
+                _context.Requests.Remove(r);
+            }
+
+            _context.SaveChanges();
+
+            return RedirectToAction("MarketingDirectorProfile");
         }
     }
 }

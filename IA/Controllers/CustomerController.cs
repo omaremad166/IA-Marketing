@@ -102,9 +102,9 @@ namespace IA.Controllers
         public ActionResult AssignProject()
         {
             Request request = new Request();
-            request.ProjectId =Convert.ToInt32(Request.Form["ProjectId"]) ;
-            request.SenderId =Convert.ToInt32(Session["UserId"]) ;
-            request.ReceiverId = Convert.ToInt32(Request.Form["DirectorId"]) ;
+            request.ProjectId = Convert.ToInt32(Request.Form["ProjectId"]);
+            request.SenderId = Convert.ToInt32(Session["UserId"]);
+            request.ReceiverId = Convert.ToInt32(Request.Form["DirectorId"]);
             
             _context.Requests.Add(request);
             _context.SaveChanges();

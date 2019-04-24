@@ -1,8 +1,9 @@
-﻿@model IA.Models.Project
+﻿@model IA.ViewModels.ProjectUsersViewModel
 
 @{
-    ViewBag.Title = "EditProject";
+    ViewBag.Title = "AddMember";
 }
+
 <div class="content-wrap">
     <div class="main">
         <div class="container-fluid">
@@ -14,7 +15,7 @@
                         <div class="page-title">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                                <li class="breadcrumb-item active">Edit</li>
+                                <li class="breadcrumb-item active">Add Member</li>
                             </ol>
                         </div>
                     </div>
@@ -25,29 +26,29 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-title">
-                            <h4>Edit Project</h4>
+                            <h4>Add Member</h4>
                         </div>
                         <div class="card-body">
                             <div class="basic-elements">
-                                @using (Html.BeginForm("EditProject", "Customer"))
+                                @using (Html.BeginForm("AddMember", "MarketingDirector"))
                                 {
+                                    @Html.Hidden("ProjectId", Model.Project.ProjectId)
                                     <div class="row">
                                         <div class="col-lg-6">
-                                            @Html.HiddenFor(model => model.ProjectId)
-                                            @Html.HiddenFor(model => model.ProjectStateId)
-                                            @Html.HiddenFor(model => model.Price)
-                                            @Html.HiddenFor(model => model.StartDate)
-                                            @Html.HiddenFor(model => model.EndDate)
                                             <div class="form-group">
-                                                @Html.LabelFor(m => m.ProjectName)
-                                                @Html.TextBoxFor(m => m.ProjectName, new { @class = "form-control" })
+                                                <select name="TeamMemberId">
+                                                    @foreach (var item in Model.Users)
+                                                    {
+
+                                                        <option value="@item.UserId">
+                                                            @item.GetUserName() (@item.Role.RoleName)
+                                                        </option>
+                                                    }
+                                                </select>
                                             </div>
+
                                             <div class="form-group">
-                                                @Html.LabelFor(m => m.Description)
-                                                @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
-                                            </div>
-                                            <div class="form-group">
-                                                @Html.ActionLink("Back", "CustomerProfile", "Customer", null, new { @class = "btn" })
+                                                @Html.ActionLink("Back", "MarketingDirectorProfile", "MarketingDirector", null, new { @class = "btn" })
                                                 <button type="submit" class="btn btn-primary">Submit</button>
                                             </div>
                                         </div>
