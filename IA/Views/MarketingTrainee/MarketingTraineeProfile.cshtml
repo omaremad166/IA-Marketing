@@ -1,7 +1,6 @@
-﻿@model IA.ViewModels.UserProjectsRequestsViewModel
-
+﻿
 @{
-    ViewBag.Title = "Marketing Director Profile";
+    ViewBag.Title = "MarketingTraineeProfile";
 }
 
 <div class="content-wrap">
@@ -145,41 +144,11 @@
                                                     {
                                                         <td class="color-primary">@project.EndDate.ToString().Substring(0, 10)</td>
                                                     }
+                                                    
+                                                    
                                                     @if (project.ProjectStateId == 2)
                                                     {
-                                                        <td>@Html.ActionLink("Manage", "ManageProject", "MarketingDirector", new { project.ProjectId }, new { @class = "btn btn-light" })</td>
-                                                    }
-                                                    else
-                                                    {
-                                                        <td><button class="btn btn-light" disabled>Manage</button></td>
-                                                    }
-                                                    @if (project.ProjectStateId == 2)
-                                                    {
-                                                        <td>@Html.ActionLink("Add Member", "AddMember", "MarketingDirector", new { project.ProjectId }, new { @class = "btn btn-success" })</td>
-                                                    }
-                                                    else
-                                                    {
-                                                        <td><button class="btn btn-success" disabled>Add Member</button></td>
-                                                    }
-                                                    @if (project.ProjectStateId == 2)
-                                                    {
-                                                        <td>@Html.ActionLink("Remove Member", "RemoveMember", "MarketingDirector", new { project.ProjectId }, new { @class = "btn btn-danger" })</td>
-                                                    }
-                                                    else
-                                                    {
-                                                        <td><button class="btn btn-danger" disabled>Remove Member</button></td>
-                                                    }
-                                                    @if (project.ProjectStateId == 2)
-                                                    {
-                                                        <td>@Html.ActionLink("Finish", "FinishProject", "MarketingDirector", new { project.ProjectId }, new { @class = "btn btn-success" })</td>
-                                                    }
-                                                    else
-                                                    {
-                                                        <td><button class="btn btn-success" disabled>Finish</button></td>
-                                                    }
-                                                    @if (project.ProjectStateId == 2)
-                                                    {
-                                                        <td>@Html.ActionLink("Leave", "LeaveProject", "MarketingDirector", new { project.ProjectId }, new { @class = "btn btn-danger" })</td>
+                                                        <td>@Html.ActionLink("Leave", "LeaveProject", "MarketingTrainee", new { project.ProjectId }, new { @class = "btn btn-danger" })</td>
                                                     }
                                                     else
                                                     {
@@ -214,20 +183,13 @@
 
                                             @foreach (var request in Model.Requests)
                                             {
-                                            <tr>
-                                                <td>@request.Project.ProjectName</td>
-                                                <td>@request.Project.Description</td>
-                                                @if (request.Sender.Role.RoleId == 5)
-                                                {
-                                                    <td>@request.Sender.GetUserName() (@request.Sender.Role.RoleName) "Leave Project"</td>
-                                                }
-                                                else
-                                                {
+                                                <tr>
+                                                    <td>@request.Project.ProjectName</td>
+                                                    <td>@request.Project.Description</td>
                                                     <td>@request.Sender.GetUserName() (@request.Sender.Role.RoleName)</td>
-                                                }
-                                                <td>@Html.ActionLink("Accept", "AcceptRequest", "MarketingDirector", new { request.RequestId }, new { @class = "btn btn-success" })</td>
-                                                <td>@Html.ActionLink("Reject", "RejectRequest", "MarketingDirector", new { request.RequestId }, new { @class = "btn btn-danger" })</td>
-                                            </tr>
+                                                    <td>@Html.ActionLink("Accept", "AcceptRequest", "MarketingDirector", new { request.RequestId }, new { @class = "btn btn-success" })</td>
+                                                    <td>@Html.ActionLink("Reject", "RejectRequest", "MarketingDirector", new { request.RequestId }, new { @class = "btn btn-danger" })</td>
+                                                </tr>
                                             }
                                         </tbody>
                                     </table>
@@ -241,6 +203,3 @@
         </div>
     </div>
 </div>
-
-
-

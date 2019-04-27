@@ -34,25 +34,37 @@ namespace IA.Controllers
         public ActionResult AcceptRequest(int RequestId)
         {
             Request request = _context.Requests.Find(RequestId);
-
-            UserProject userProject = new UserProject();
-            userProject.ProjectId = request.ProjectId;
-            userProject.UserId = Convert.ToInt32(Session["UserId"]);
-            _context.UserProjects.Add(userProject);
-
-            Project project = _context.Projects.Find(request.ProjectId);
-            project.ProjectStateId = 2;
-            _context.Entry(project).State = EntityState.Modified;
-
-            List<Request> requests = _context.Requests.Where(r => r.ProjectId == request.ProjectId).ToList();
-
-            foreach(var r in requests)
-            {
-                _context.Requests.Remove(r);
-            }
             
-            _context.SaveChanges();
 
+            if (request.Sender.Role.RoleId == 5)
+            {
+                int UserId = Convert.ToInt32(request.SenderId);
+                int ProjectId = request.ProjectId;
+                UserProject userProject = _context.UserProjects.Where(up => up.ProjectId == ProjectId && up.UserId == UserId).FirstOrDefault();
+                _context.UserProjects.Remove(userProject);
+                _context.Requests.Remove(request);
+                _context.SaveChanges();
+            }
+            else
+            {
+                UserProject userProject = new UserProject();
+                userProject.ProjectId = request.ProjectId;
+                userProject.UserId = Convert.ToInt32(Session["UserId"]);
+                _context.UserProjects.Add(userProject);
+
+                Project project = _context.Projects.Find(request.ProjectId);
+                project.ProjectStateId = 2;
+                _context.Entry(project).State = EntityState.Modified;
+
+                List<Request> requests = _context.Requests.Where(r => r.ProjectId == request.ProjectId).ToList();
+
+                foreach (var r in requests)
+                {
+                    _context.Requests.Remove(r);
+                }
+                _context.SaveChanges();
+            }
+           
             return RedirectToAction("MarketingDirectorProfile");
         }
 

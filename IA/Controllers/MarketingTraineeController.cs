@@ -1,6 +1,8 @@
 ﻿using IA.Models;
+using IA.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -9,36 +11,64 @@ namespace IA.Controllers
 {
     public class MarketingTraineeController : Controller
     {
+        private AppDbContext _context = new AppDbContext();
+
         public ActionResult MarketingTraineeProfile()
         {
-            return View();
+            int userId = Convert.ToInt32(Session["UserId"]);
+
+            UserProjectsRequestsViewModel UserProjectsVM = new UserProjectsRequestsViewModel();
+            UserProjectsVM.User = _context.Users.Find(userId);
+
+            var ProjectIds = _context.UserProjects.Where(up => up.UserId == userId).Select(up => up.ProjectId).ToList();
+            var Projects = _context.Projects.Where(p => ProjectIds.Contains(p.ProjectId)).ToList();
+
+            UserProjectsVM.Projects = Projects;
+
+            var requests = _context.Requests.Where(r => r.ReceiverId == userId).Include(r => r.Project).Include(r => r.Sender).ToList();
+            UserProjectsVM.Requests = requests;
+
+            return View(UserProjectsVM);
         }
 
-        public ActionResult ViewRequests()
+        public ActionResult AcceptRequest(int RequestId)
         {
-            return View();
+            Request request = _context.Requests.Find(RequestId);
+
+            UserProject userProject = new UserProject();
+            userProject.ProjectId = request.ProjectId;
+            userProject.UserId = Convert.ToInt32(Session["UserId"]);
+
+            _context.UserProjects.Add(userProject);
+            _context.Requests.Remove(request);
+            _context.SaveChanges();
+
+            return RedirectToAction("MarketingTraineeProfile");
         }
 
-        [HttpPost]
-        public ActionResult RespondRequests(Request _request)
+        public ActionResult RejectRequest(int RequestId)
         {
-            return View();
+            Request request = _context.Requests.Find(RequestId);
+            _context.Requests.Remove(request);
+            _context.SaveChanges();
+
+            return RedirectToAction("MarketingTraineeProfile");
         }
 
-        public ActionResult ListCurrentProjects()
+        public ActionResult LeaveProject(int ProjectId)
         {
-            return View();
-        }
+            Request request = new Request();
+            request.ProjectId = ProjectId;
+            request.SenderId = Convert.ToInt32(Session["UserId"]);
 
-        public ActionResult ListDeliveredProjects()
-        {
-            return View();
-        }
+            var userProject = _context.UserProjects.Where(up => up.ProjectId == ProjectId && up.User.RoleId == 3).Single();
 
-        [HttpPost]
-        public ActionResult LeaveProjectRequest(Project _project)
-        {
-            return View();
+            request.ReceiverId = userProject.UserId;
+
+            _context.Requests.Add(request);
+            _context.SaveChanges();
+
+            return RedirectToAction("MarketingTraineeProfile");
         }
     }
 }
