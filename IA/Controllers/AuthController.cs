@@ -19,9 +19,17 @@ namespace IA.Controllers
         [HttpPost]
         public ActionResult Register(User user)
         {
-            user.RoleId = 2;
-            db.Users.Add(user);
-            db.SaveChanges();
+            var UserWithTheSameEmail = db.Users.Where(u => u.Email == user.Email).First();
+            if(ModelState.IsValid)
+            {
+                if (UserWithTheSameEmail == null)
+                {
+                    user.RoleId = 2;
+                    db.Users.Add(user);
+                    db.SaveChanges();
+                }
+            }
+            
             return View("Index");
         }
 

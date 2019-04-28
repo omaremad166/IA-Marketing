@@ -225,7 +225,6 @@
     <Compile Include="Controllers\MarketingDirectorController.cs" />
     <Compile Include="Controllers\MarketingTeamLeaderController.cs" />
     <Compile Include="Controllers\MarketingTraineeController.cs" />
-    <Compile Include="Controllers\UserProjectsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -260,6 +259,10 @@
     <Compile Include="Migrations\201904222148063_Schedule-Project.cs" />
     <Compile Include="Migrations\201904222148063_Schedule-Project.Designer.cs">
       <DependentUpon>201904222148063_Schedule-Project.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904271348008_Validation-Register.cs" />
+    <Compile Include="Migrations\201904271348008_Validation-Register.Designer.cs">
+      <DependentUpon>201904271348008_Validation-Register.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Project.cs" />
@@ -498,17 +501,15 @@
     <Content Include="Views\Customer\CreateProject.cshtml" />
     <Content Include="Views\Customer\EditProject.cshtml" />
     <Content Include="Views\Customer\AssignProject.cshtml" />
-    <Content Include="Views\Admin\View.cshtml" />
     <Content Include="Views\MarketingDirector\MarketingDirectorProfile.cshtml" />
     <Content Include="Views\MarketingDirector\ManageProject.cshtml" />
     <Content Include="Views\MarketingDirector\AddMember.cshtml" />
-    <Content Include="Views\UserProjects\Create.cshtml" />
-    <Content Include="Views\UserProjects\Delete.cshtml" />
-    <Content Include="Views\UserProjects\Details.cshtml" />
-    <Content Include="Views\UserProjects\Edit.cshtml" />
-    <Content Include="Views\UserProjects\Index.cshtml" />
     <Content Include="Views\MarketingDirector\RemoveMember.cshtml" />
     <Content Include="Views\MarketingTrainee\MarketingTraineeProfile.cshtml" />
+    <Content Include="Views\Admin\ListProjects.cshtml" />
+    <Content Include="Views\Admin\AdminProfile.cshtml" />
+    <Content Include="Views\Admin\ListUsers.cshtml" />
+    <Content Include="Views\Admin\AddUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -551,6 +552,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904222148063_Schedule-Project.resx">
       <DependentUpon>201904222148063_Schedule-Project.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904271348008_Validation-Register.resx">
+      <DependentUpon>201904271348008_Validation-Register.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

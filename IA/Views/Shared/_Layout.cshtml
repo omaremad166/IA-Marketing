@@ -97,6 +97,8 @@
                         @if (Convert.ToInt32(Session["UserRole"]) == 1)
                         {
                             @Html.ActionLink("My Profile", "AdminProfile", "Admin")
+                            @Html.ActionLink("List Users", "ListUsers", "Admin")
+                            @Html.ActionLink("List Projects", "ListProjects", "Admin")
                         }
                         else if (Convert.ToInt32(Session["UserRole"]) == 2)
                         {
@@ -115,8 +117,7 @@
                             @Html.ActionLink("My Profile", "MarketingTraineeProfile", "MarketingTrainee")
                         }
                     </li>
-                    <li><a id="login"><i class="ti-angle-double-right"></i>Login</a></li>
-                    <li><a id="salem"><i class="ti-shift-right"></i>Register</a></li>
+
                     <li><i class="ti-close"></i>@Html.ActionLink("Logout", "Logout", "Auth")</li>
                 </ul>
             </div>
