@@ -1,6 +1,7 @@
 ﻿using IA.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -13,13 +14,15 @@ namespace IA.Controllers
 
         public ActionResult Index()
         {
+            //this.ViewBag.Projects = db.Projects.Where(p => p.ProjectStateId == 1).ToList();
+            this.ViewBag.Projects = db.UserProjects.Include(up => up.Project).Where(up => up.Project.ProjectStateId == 1).Include(up => up.User).Where(up => up.User.RoleId == 2).ToList();
             return View();
         }
 
         [HttpPost]
         public ActionResult Register(User user)
         {
-            var UserWithTheSameEmail = db.Users.Where(u => u.Email == user.Email).First();
+            var UserWithTheSameEmail = db.Users.Where(u => u.Email == user.Email).FirstOrDefault();
             if(ModelState.IsValid)
             {
                 if (UserWithTheSameEmail == null)
@@ -30,7 +33,7 @@ namespace IA.Controllers
                 }
             }
             
-            return View("Index");
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -50,6 +53,28 @@ namespace IA.Controllers
         {
             Session.RemoveAll();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult CreateProject()
+        {
+            Project project = new Project();
+
+            project.ProjectName = Request.Form["ProjectName"];
+            project.Description = Request.Form["Description"];
+            project.ProjectStateId = 1;
+
+            db.Projects.Add(project);
+
+            UserProject userProject = new UserProject();
+
+            userProject.ProjectId = project.ProjectId;
+            userProject.UserId = Convert.ToInt32(Session["UserId"]);
+
+            db.UserProjects.Add(userProject);
+
+            db.SaveChanges();
+
+            return RedirectToAction("../Customer/CustomerProfile");
         }
     }
 }

@@ -89,13 +89,11 @@
     <div class="sidebar sidebar-hide-to-small sidebar-shrink sidebar-gestures">
         <div class="nano">
             <div class="nano-content">
-                <div class="logo"><a href="index-2.html"><img src="~/Content/assets/images/logo.png" alt="" /></a></div>
+                <div class="logo"><a href="index-2.html"></a></div>
                 <ul>
                     <li class="label">Main</li>
-                    <li><a href="index-2.html"><i class="ti-home"></i> Home </a></li>
-                    <li><a href="create.html"><i class="ti-id-badge"></i>Create Profile</a></li>
+                    <li>@Html.ActionLink("Home", "Index", "Auth")</li>
                     <li>
-                        <i class="ti-user"></i>
                         @if (Convert.ToInt32(Session["UserRole"]) == 1)
                         {
                             @Html.ActionLink("My Profile", "AdminProfile", "Admin")
@@ -119,8 +117,10 @@
                             @Html.ActionLink("My Profile", "MarketingTraineeProfile", "MarketingTrainee")
                         }
                     </li>
-
-                    <li><i class="ti-close"></i>@Html.ActionLink("Logout", "Logout", "Auth")</li>
+                    @if (Convert.ToInt32(Session["UserRole"]) >= 1 && Convert.ToInt32(Session["UserRole"]) <= 5)
+                    {
+                        <li>@Html.ActionLink("Logout", "Logout", "Auth")</li>
+                    }
                 </ul>
             </div>
         </div>

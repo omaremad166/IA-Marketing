@@ -1,4 +1,9 @@
 ﻿@model IA.Models.User
+@using IA.Models
+
+@{
+    IEnumerable<UserProject> userProjects = ViewBag.Projects;
+}
 
 @if (Session["UserId"] == null)
 {
@@ -119,22 +124,21 @@
                         </div>
                         <div class="card-body">
                             <div class="basic-form">
-                                <form>
+                                @using (Html.BeginForm("CreateProject", "Auth"))
+                                {
                                     <div class="form-group">
                                         <label>Project Name</label>
-                                        <input type="text" class="form-control" placeholder="Project Name">
+                                        <input type="text" class="form-control" name="ProjectName" required>
                                     </div>
                                     <div class="form-group">
-                                        <label>Price</label>
-                                        <input type="text" class="form-control" placeholder="Price in dollar currency">
+                                        <label>Description</label>
+                                        <textarea class="form-control" name="Description" required></textarea>
                                     </div>
-                                    <div class="form-group">
-                                        <label>description</label>
-                                        <textarea class="form-control" placeholder="description"></textarea>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </form>
-                            </div>
+                                    if (Convert.ToInt32(Session["UserRole"]) == 2)
+                                    {
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    }
+                                }
                         </div>
                     </div>
                 </div>
@@ -144,7 +148,7 @@
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-title">
-                                    <h4>Bootstrap Data Table </h4>
+                                    <h4>All Pending Projects</h4>
 
                                 </div>
                                 <div class="bootstrap-data-table-panel table_22">
@@ -152,43 +156,26 @@
                                         <table id="row-select" class="display table table-borderd table-hover forminline_22">
                                             <thead>
                                                 <tr>
-                                                    <th>Name</th>
-                                                    <th>Position</th>
-                                                    <th>Office</th>
-                                                    <th>Age</th>
-                                                    <th>Start date</th>
-                                                    <th>Salary</th>
+                                                    <th>Project Name</th>
+                                                    <th>Customer Name</th>
+                                                    <th>Description</th>
+                                                    <th>Project State</th>
                                                 </tr>
                                             </thead>
 
                                             <tbody>
-                                                <tr>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>61</td>
-                                                    <td>2011/04/25</td>
-                                                    <td>$320,800</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Vivian Harrell</td>
-                                                    <td>Financial Controller</td>
-                                                    <td>San Francisco</td>
-                                                    <td>62</td>
-                                                    <td>2009/02/14</td>
-                                                    <td>$452,500</td>
-                                                </tr>
+                                                @foreach (var item in userProjects)
+                                                {
+                                                    <tr>
+                                                        <td>@item.Project.ProjectName</td>
+                                                        <td>@item.User.GetUserName()</td>
+                                                        <td>@item.Project.Description</td>
+                                                        <td><span class="badge badge-warning">@item.Project.ProjectState.State</span></td>
+                                                    </tr>
+                                                }
+
                                             </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Position</th>
-                                                    <th>Office</th>
-                                                    <th>Age</th>
-                                                    <th>Start date</th>
-                                                    <th>Salary</th>
-                                                </tr>
-                                            </tfoot>
+                                            
                                         </table>
                                     </div>
                                 </div>
