@@ -23,49 +23,46 @@
                 </div>
                 <!-- /# column -->
             </div>
-            <!-- /# row -->
-            <section id="main-content">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="user-profile">
-                                    <div class="row">
-                                        <div class="col-lg-4">
-                                            <div class="user-photo m-b-30">
-                                                <img class="img-fluid" src="~/content/assets/images/user-profile.jpg" alt="" />
-                                            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="user-profile">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="user-photo m-b-30">
+                                            <img class="img-fluid" src="~/content/assets/images/user-profile.jpg" alt="" />
                                         </div>
-                                        <div class="col-lg-8">
-                                            <div class="user-profile-name">@Model.User.GetUserName()</div>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <div class="user-profile-name">@Model.User.GetUserName()</div>
 
-                                            <div class="user-job-title">@Model.User.Description</div>
+                                        <div class="user-job-title">@Model.User.Description</div>
 
-                                            <div class="custom-tab user-profile-tab">
-                                                <ul class="nav nav-tabs" role="tablist">
-                                                    <li role="presentation" class="active">
-                                                        <a href="#1" aria-controls="1" role="tab" data-toggle="tab">About</a>
-                                                    </li>
-                                                </ul>
-                                                <div class="tab-content">
-                                                    <div role="tabpanel" class="tab-pane active" id="1">
-                                                        <div class="contact-information">
-                                                            <h4>Contact information</h4>
-                                                            <div class="phone-content">
-                                                                <span class="contact-title">Phone:</span>
-                                                                <span class="phone-number">+2 @Model.User.PhoneNo</span>
-                                                            </div>
-                                                            <div class="email-content">
-                                                                <span class="contact-title">Email:</span>
-                                                                <span class="contact-email">@Model.User.Email</span>
-                                                            </div>
+                                        <div class="custom-tab user-profile-tab">
+                                            <ul class="nav nav-tabs" role="tablist">
+                                                <li role="presentation" class="active">
+                                                    <a href="#1" aria-controls="1" role="tab" data-toggle="tab">About</a>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div role="tabpanel" class="tab-pane active" id="1">
+                                                    <div class="contact-information">
+                                                        <h4>Contact information</h4>
+                                                        <div class="phone-content">
+                                                            <span class="contact-title">Phone:</span>
+                                                            <span class="phone-number">+2 @Model.User.PhoneNo</span>
                                                         </div>
-                                                        <div class="basic-information">
-                                                            <h4>Basic information</h4>
-                                                            <div class="gender-content">
-                                                                <span class="contact-title">User Type:</span>
-                                                                <span class="gender">@Model.User.Role.RoleName</span>
-                                                            </div>
+                                                        <div class="email-content">
+                                                            <span class="contact-title">Email:</span>
+                                                            <span class="contact-email">@Model.User.Email</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="basic-information">
+                                                        <h4>Basic information</h4>
+                                                        <div class="gender-content">
+                                                            <span class="contact-title">User Type:</span>
+                                                            <span class="gender">@Model.User.Role.RoleName</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -77,129 +74,186 @@
                         </div>
                     </div>
                 </div>
-                <!-- /# row -->
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-title">
-                                <h4>Projects</h4>
-                            </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
 
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-hover ">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Status</th>
-                                                <th>Description</th>
-                                                <th>Price</th>
-                                                <th>Start Date</th>
-                                                <th>End Date</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                            @foreach (var project in Model.Projects)
-                                            {
-                                                <tr>
-                                                    <td>@project.ProjectName</td>
-                                                    <td>
-                                                        @if (@project.ProjectState.ProjectStateId == 4)
-                                                        {
-                                                            <span class="badge badge-success">@project.ProjectState.State</span>
-                                                        }
-                                                        else if (@project.ProjectState.ProjectStateId == 2)
-                                                        {
-                                                            <span class="badge badge-primary">@project.ProjectState.State</span>
-                                                        }
-                                                        else if (@project.ProjectState.ProjectStateId == 1)
-                                                        {
-                                                            <span class="badge badge-warning">@project.ProjectState.State</span>
-                                                        }
-                                                    <td>@project.Description</td>
-
-                                                    @if (project.Price == null)
-                                                    {
-                                                        <td class="color-primary">------</td>
-                                                    }
-                                                    else
-                                                    {
-                                                        <td class="color-primary">$@project.Price</td>
-                                                    }
-
-                                                    @if (project.StartDate == null)
-                                                    {
-                                                        <td class="color-primary">------</td>
-                                                    }
-                                                    else
-                                                    {
-                                                        <td class="color-primary">@project.StartDate.ToString().Substring(0, 10)</td>
-                                                    }
-                                                    @if (project.EndDate == null)
-                                                    {
-                                                        <td class="color-primary">------</td>
-                                                    }
-                                                    else
-                                                    {
-                                                        <td class="color-primary">@project.EndDate.ToString().Substring(0, 10)</td>
-                                                    }
-                                                    
-                                                    
-                                                    @if (project.ProjectStateId == 2)
-                                                    {
-                                                        <td>@Html.ActionLink("Leave", "LeaveProject", "MarketingTrainee", new { project.ProjectId }, new { @class = "btn btn-danger" })</td>
-                                                    }
-                                                    else
-                                                    {
-                                                        <td><button class="btn btn-danger" disabled>Leave</button></td>
-                                                    }
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
                     </div>
-                    <!-- /# column -->
-                    <div class="col-lg-6">
-                        <div class="card">
-                            <div class="card-title">
-                                <h4>Requests</h4>
-                            </div>
-
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-hover ">
-                                        <thead>
-                                            <tr>
-                                                <th>Project Name</th>
-                                                <th>Description</th>
-                                                <th>Customer Name</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                            @foreach (var request in Model.Requests)
-                                            {
-                                                <tr>
-                                                    <td>@request.Project.ProjectName</td>
-                                                    <td>@request.Project.Description</td>
-                                                    <td>@request.Sender.GetUserName() (@request.Sender.Role.RoleName)</td>
-                                                    <td>@Html.ActionLink("Accept", "AcceptRequest", "MarketingDirector", new { request.RequestId }, new { @class = "btn btn-success" })</td>
-                                                    <td>@Html.ActionLink("Reject", "RejectRequest", "MarketingDirector", new { request.RequestId }, new { @class = "btn btn-danger" })</td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /# column -->
                 </div>
-            </section>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-title">
+                            <h4>Projects</h4>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover ">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Status</th>
+                                            <th>Description</th>
+                                            <th>Price</th>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @foreach (var project in Model.Projects)
+                                        {
+                                            <tr>
+                                                <td>@project.ProjectName</td>
+                                                <td>
+                                                    @if (@project.ProjectState.ProjectStateId == 4)
+                                                    {
+                                                        <span class="badge badge-success">@project.ProjectState.State</span>
+                                                    }
+                                                    else if (@project.ProjectState.ProjectStateId == 2)
+                                                    {
+                                                        <span class="badge badge-primary">@project.ProjectState.State</span>
+                                                    }
+                                                    else if (@project.ProjectState.ProjectStateId == 1)
+                                                    {
+                                                        <span class="badge badge-warning">@project.ProjectState.State</span>
+                                                    }
+                                                <td>@project.Description</td>
+
+                                                @if (project.Price == null)
+                                                {
+                                                    <td class="color-primary">------</td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="color-primary">$@project.Price</td>
+                                                }
+
+                                                @if (project.StartDate == null)
+                                                {
+                                                    <td class="color-primary">------</td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="color-primary">@project.StartDate.ToString().Substring(0, 10)</td>
+                                                }
+                                                @if (project.EndDate == null)
+                                                {
+                                                    <td class="color-primary">------</td>
+                                                }
+                                                else
+                                                {
+                                                    <td class="color-primary">@project.EndDate.ToString().Substring(0, 10)</td>
+                                                }
+
+
+                                                @if (project.ProjectStateId == 2)
+                                                {
+                                                    <td>@Html.ActionLink("Leave", "LeaveProject", "MarketingTrainee", new { project.ProjectId }, new { @class = "btn btn-danger" })</td>
+                                                }
+                                                else
+                                                {
+                                                    <td><button class="btn btn-danger" disabled>Leave</button></td>
+                                                }
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /# column -->
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-title">
+                            <h4>Requests</h4>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover ">
+                                    <thead>
+                                        <tr>
+                                            <th>Project Name</th>
+                                            <th>Description</th>
+                                            <th>Customer Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @foreach (var request in Model.Requests)
+                                        {
+                                            <tr>
+                                                <td>@request.Project.ProjectName</td>
+                                                <td>@request.Project.Description</td>
+                                                <td>@request.Sender.GetUserName() (@request.Sender.Role.RoleName)</td>
+                                                <td>@Html.ActionLink("Accept", "AcceptRequest", "MarketingDirector", new { request.RequestId }, new { @class = "btn btn-success" })</td>
+                                                <td>@Html.ActionLink("Reject", "RejectRequest", "MarketingDirector", new { request.RequestId }, new { @class = "btn btn-danger" })</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /# column -->
+            </div>
         </div>
     </div>
 </div>
+
+<script>
+
+    $(document).ready(function () {
+            $.getJSON("/MarketingTrainee/GetData", function (data) {
+                Highcharts.chart('container', {
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: 0,
+                        plotShadow: false
+                    },
+                    title: {
+                        text: 'User<br>Projects',
+                        align: 'center',
+                        verticalAlign: 'middle',
+                        y: 40
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    },
+                    plotOptions: {
+                        pie: {
+                            dataLabels: {
+                                enabled: true,
+                                distance: -50,
+                                style: {
+                                    fontWeight: 'bold',
+                                    color: 'white'
+                                }
+                            },
+                            startAngle: -90,
+                            endAngle: 90,
+                            center: ['50%', '75%'],
+                            size: '110%'
+                        }
+                    },
+                    series: [{
+                        type: 'pie',
+                        name: 'User Projects',
+                        innerSize: '50%',
+                        data: [
+                            ['Finished', data.Finished],
+                            ['In Progress', data.InProgress]
+                        ]
+                    }]
+                });
+            });
+    });
+</script>
+

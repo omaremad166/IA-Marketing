@@ -70,5 +70,26 @@ namespace IA.Controllers
 
             return RedirectToAction("MarketingTraineeProfile");
         }
+
+        public JsonResult GetData()
+        {
+            int UserId = Convert.ToInt32(Session["UserId"]);
+            var Projects = _context.UserProjects.Where(up => up.UserId == UserId).Include(up => up.User).Include(up => up.Project).ToList();
+
+            int InProgressNo = Projects.Where(p => p.Project.ProjectStateId == 2).Count();
+            int FinishedNo = Projects.Where(p => p.Project.ProjectStateId == 4).Count();
+
+            Ratio ratio = new Ratio();
+            ratio.Finished = FinishedNo;
+            ratio.InProgress = InProgressNo;
+
+            return Json(ratio, JsonRequestBehavior.AllowGet);
+        }
+
+        public class Ratio
+        {
+            public int Finished { get; set; }
+            public int InProgress { get; set; }
+        }
     }
 }
