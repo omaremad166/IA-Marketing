@@ -475,6 +475,8 @@
     <Content Include="Content\assets\fonts\weathericons-regular-webfont.woff2" />
     <Content Include="Content\assets\fonts\weathericons-regular-webfontd41d.eot" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\Charts\exporting.js" />
+    <Content Include="Scripts\Charts\highcharts.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -510,10 +512,12 @@
     <Content Include="Views\Admin\AdminProfile.cshtml" />
     <Content Include="Views\Admin\ListUsers.cshtml" />
     <Content Include="Views\Admin\AddUser.cshtml" />
+    <Content Include="Views\MarketingTeamLeader\MarketingTeamLeaderProfile.cshtml" />
+    <Content Include="Views\MarketingTeamLeader\AddMember.cshtml" />
+    <Content Include="Views\MarketingTeamLeader\RemoveMember.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\MarketingTeamLeader\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
